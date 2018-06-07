@@ -57,7 +57,7 @@ public class ToolBow extends Item implements IHasModel
     {
 		
         this.maxStackSize = 1;
-        this.setMaxDamage( (1024)material.getMaxUses(100));
+        this.setMaxDamage( (int)material.getMaxUses());
         this.enchantability = material.getEnchantability();
         this.chargeSpeedMod = (float) 20.0;
         this.maxArrowVelocity = (float) 1.0;
