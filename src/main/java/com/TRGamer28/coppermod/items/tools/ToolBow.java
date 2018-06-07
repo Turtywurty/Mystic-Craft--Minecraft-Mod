@@ -1,4 +1,3 @@
-
 package com.TRGamer28.coppermod.items.tools;
  
 import com.TRGamer28.coppermod.init.ModItems;
@@ -164,7 +163,7 @@ public class ToolBow extends Item implements IHasModel
  
                 float f = getArrowVelocity(i);
  
-                if ((double)f >= 0.1D)
+                if ((double)f >= 1.1D)
                 {
                     boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemArrow && ((ItemArrow) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer));
  
@@ -174,7 +173,7 @@ public class ToolBow extends Item implements IHasModel
                         EntityArrow entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
                         entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
  
-                        if (f >= 1.0F)
+                        if (f >= 2.0F)
                         {
                             entityarrow.setIsCritical(true);
                         }
@@ -195,7 +194,7 @@ public class ToolBow extends Item implements IHasModel
  
                         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0)
                         {
-                            entityarrow.setFire(200);
+                            entityarrow.setFire(300);
                         }
  
                         stack.damageItem(1, entityplayer);
@@ -231,8 +230,8 @@ public class ToolBow extends Item implements IHasModel
      */
     public static float getArrowVelocity(int charge)
     {
-        float f = (float)charge / (20.0f / chargeSpeedMod);
-        f = (f * f + f * 2.0F) / 3.0F;
+        float f = (float)charge / (23.0f / chargeSpeedMod);
+        f = (f * f + f * 5.0F) / 6.0F;
 
         if (f > maxArrowVelocity)
         {
@@ -297,6 +296,3 @@ public class ToolBow extends Item implements IHasModel
  
     }
 } //end of class
-
-
-
