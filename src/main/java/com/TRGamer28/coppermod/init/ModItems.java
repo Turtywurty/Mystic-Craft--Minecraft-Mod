@@ -28,12 +28,21 @@ public class ModItems {
 	
      //Materials
 	public static final ToolMaterial MATERIAL_COPPER = EnumHelper.addToolMaterial("material_copper", 1, 131, 6.0F, 2.0F, 10);
+	public static final ToolMaterial MATERIAL_SILVER = EnumHelper.addToolMaterial("material_silver", 1, 131, 6.0F, 2.0F, 10);
+	public static final ToolMaterial MATERIAL_BRONZE = EnumHelper.addToolMaterial("material_bronze", 1, 131, 6.0F, 2.0F, 10);
+	public static final ToolMaterial MATERIAL_TIN = EnumHelper.addToolMaterial("material_tin", 1, 131, 6.0F, 2.0F, 10);
 	
 	
 	//Items
 	public static final Item COPPER_INGOT = new ItemBase("copper_ingot");
 	public static final Item COPPER_NUGGET = new ItemBase("copper_nugget");
-	
+	public static final Item SILVER_INGOT = new ItemBase("silver_ingot");
+        public static final Item SILVER_NUGGET = new ItemBase("silver_nugget");
+	public static final Item BRONZE_INGOT = new ItemBase("bronze_ingot");
+	public static final Item BRONZE_NUGGET = new ItemBase("bronze_nugget");
+	public static final Item TIN_INGOT = new ItemBase("tin_ingot");
+        public static final Item TIN_NUGGET = new ItemBase("tin_nugget");
+
 	//Tools
 	 public static final ItemSword COPPER_INGOT_SWORD = new ToolSword("copper_ingot_sword", MATERIAL_COPPER);
 	 public static final ItemSpade COPPER_INGOT_SHOVEL = new ToolSpade("copper_ingot_shovel", MATERIAL_COPPER);
