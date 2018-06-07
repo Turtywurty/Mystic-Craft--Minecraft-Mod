@@ -33,6 +33,9 @@ public class ModItems {
 	//Items
 	public static final Item COPPER_INGOT = new ItemBase("copper_ingot");
 	public static final Item COPPER_NUGGET = new ItemBase("copper_nugget");
+	public static final Item SILVER_INGOT = new ItemBase("silver_ingot");
+	public static final Item TIN_INGOT = new ItemBase("tin_ingot");
+	public static final Item BRONZE_INGOT = new ItemBase("bronze_ingot");
 	
 	//Tools
 	 public static final ItemSword COPPER_INGOT_SWORD = new ToolSword("copper_ingot_sword", MATERIAL_COPPER);
