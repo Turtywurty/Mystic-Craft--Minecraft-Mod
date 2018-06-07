@@ -1,5 +1,6 @@
-package com.TRGamer28.coppermod.items.tools;
 
+package com.TRGamer28.coppermod.items.tools;
+ 
 import com.TRGamer28.coppermod.init.ModItems;
 import com.TRGamer28.coppermod.util.IHasModel;
 import com.TRGamer28.mysticcraft.Main;
@@ -29,25 +30,55 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
+//https://pastebin.com/XumGP7XX
+ 
 public class ToolBow extends Item implements IHasModel
 {
-    public ToolBow(String name)
+	private int maxDmg;
+	private int enchantability;
+	private static float chargeSpeedMod;
+	private static float maxArrowVelocity;
+	
+	/** Uses custom bow statistics**/
+	//example usage (standard bow values) maxDurability -> 384, enchantability -> 1, maxArrowVelocity -> 1.0f, chargeSpeedMod -> 1.0f
+	public ToolBow(String name, int maxDurability, int enchantability, float maxArrowVelocity, float chargeSpeedMod) 
+	{
+		this.maxStackSize = 1;
+        this.setMaxDamage(maxDurability);
+        this.enchantability = enchantability;
+        this.maxArrowVelocity = maxArrowVelocity;
+        this.chargeSpeedMod = chargeSpeedMod;
+        construct(name);
+    }
+	
+	
+	/** takes normal tool parameters **/
+	public ToolBow(String name, ToolMaterial material)
     {
+		
         this.maxStackSize = 1;
-        this.setMaxDamage(1024);
-        this.setCreativeTab(CreativeTabs.COMBAT);
-        setUnlocalizedName(name);
-    	setRegistryName(name);
-    	
-  
-    	ModItems.ITEMS.add(this);
+        this.setMaxDamage( (1024)material.getMaxUses(100));
+        this.enchantability = material.getEnchantability();
+        this.chargeSpeedMod = (float) 20.0;
+        this.maxArrowVelocity = (float) 1.0;
+        construct(name);
+    }
+	
+	/** executes standard constructor aspects **/
+	public void construct(String name) 
+	{
+		//adds to registry
+		setUnlocalizedName(name);
+        setRegistryName(name);
+        ModItems.ITEMS.add(this);
+        
+        //normal constructor
+        
+		this.setCreativeTab(CreativeTabs.COMBAT);
         this.addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter()
-        
         {
-        
             @SideOnly(Side.CLIENT)
-            public float apply1(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
+            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
             {
                 if (entityIn == null)
                 {
@@ -55,15 +86,15 @@ public class ToolBow extends Item implements IHasModel
                 }
                 else
                 {
-                    return entityIn.getActiveItemStack().getItem() != ModItems.COPPERBOW ? 0.0F : (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F;
+                	if(entityIn.getActiveItemStack().getItem() != Items.BOW) {
+                		return (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F;
+                	}
+                	if(entityIn.getActiveItemStack().getItem() instanceof ToolBow) {
+                		return (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F;
+                	}
+                    return (float) 0.0;
                 }
             }
-
-			@Override
-			public float apply(ItemStack stack, World worldIn, EntityLivingBase entityIn) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
         });
         this.addPropertyOverride(new ResourceLocation("pulling"), new IItemPropertyGetter()
         {
@@ -74,16 +105,10 @@ public class ToolBow extends Item implements IHasModel
             }
         });
     }
-    
-    @Override
 	
-    public void registerModels() 
-	{
-		Main.proxy.registerItemRenderer(this, 0, "inventory");
 
-		
-	}
-    
+	
+	/** Finds Player Ammo **/
     private ItemStack findAmmo(EntityPlayer player)
     {
         if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND)))
@@ -125,76 +150,76 @@ public class ToolBow extends Item implements IHasModel
             EntityPlayer entityplayer = (EntityPlayer)entityLiving;
             boolean flag = entityplayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
             ItemStack itemstack = this.findAmmo(entityplayer);
-
+ 
             int i = this.getMaxItemUseDuration(stack) - timeLeft;
             i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, entityplayer, i, !itemstack.isEmpty() || flag);
             if (i < 0) return;
-
+ 
             if (!itemstack.isEmpty() || flag)
             {
                 if (itemstack.isEmpty())
                 {
                     itemstack = new ItemStack(Items.ARROW);
                 }
-
+ 
                 float f = getArrowVelocity(i);
-
+ 
                 if ((double)f >= 0.1D)
                 {
                     boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemArrow && ((ItemArrow) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer));
-
+ 
                     if (!worldIn.isRemote)
                     {
                         ItemArrow itemarrow = (ItemArrow)(itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.ARROW);
                         EntityArrow entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
                         entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
-
-                        if (f == 1.0F)
+ 
+                        if (f >= 1.0F)
                         {
                             entityarrow.setIsCritical(true);
                         }
-
+ 
                         int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
-
+ 
                         if (j > 0)
                         {
                             entityarrow.setDamage(entityarrow.getDamage() + (double)j * 1.5D + 1.5D);
                         }
-
+ 
                         int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
-
+ 
                         if (k > 0)
                         {
                             entityarrow.setKnockbackStrength(k);
                         }
-
+ 
                         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0)
                         {
                             entityarrow.setFire(200);
                         }
-
+ 
                         stack.damageItem(1, entityplayer);
-
+ 
                         if (flag1 || entityplayer.capabilities.isCreativeMode && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW))
                         {
                             entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
                         }
-
+ 
                         worldIn.spawnEntity(entityarrow);
                     }
-
+ 
                     worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-
+ 
                     if (!flag1 && !entityplayer.capabilities.isCreativeMode)
                     {
                         itemstack.shrink(1);
-
+ 
                         if (itemstack.isEmpty())
                         {
                             entityplayer.inventory.deleteStack(itemstack);
                         }
                     }
-
+ 
                     entityplayer.addStat(StatList.getObjectUseStats(this));
                 }
             }
@@ -206,12 +231,12 @@ public class ToolBow extends Item implements IHasModel
      */
     public static float getArrowVelocity(int charge)
     {
-        float f = (float)charge / 23.0F;
-        f = (f * f + f * 5.0F) / 6.0F;
+        float f = (float)charge / (20.0f / chargeSpeedMod);
+        f = (f * f + f * 2.0F) / 3.0F;
 
-        if (f > 3.0F)
+        if (f > maxArrowVelocity)
         {
-            f = 3.0F;
+            f = maxArrowVelocity;
         }
 
         return f;
@@ -240,10 +265,10 @@ public class ToolBow extends Item implements IHasModel
     {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
         boolean flag = !this.findAmmo(playerIn).isEmpty();
-
+ 
         ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, worldIn, playerIn, handIn, flag);
         if (ret != null) return ret;
-
+ 
         if (!playerIn.capabilities.isCreativeMode && !flag)
         {
             return flag ? new ActionResult(EnumActionResult.PASS, itemstack) : new ActionResult(EnumActionResult.FAIL, itemstack);
@@ -260,8 +285,18 @@ public class ToolBow extends Item implements IHasModel
      */
     public int getItemEnchantability()
     {
-        return 1;
+        return enchantability;
     }
-
 	
-}
+	
+	//required model registration
+    @Override
+	public void registerModels()
+    {
+        Main.proxy.registerItemRenderer(this, 0, "inventory");
+ 
+    }
+} //end of class
+
+
+
