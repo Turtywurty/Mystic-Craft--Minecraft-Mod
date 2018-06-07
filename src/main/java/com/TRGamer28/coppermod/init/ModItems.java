@@ -40,6 +40,6 @@ public class ModItems {
 	 public static final ItemPickaxe COPPER_PICKAXE = new ToolPickaxe("copper_pickaxe", MATERIAL_COPPER);
 	 public static final ItemAxe COPPER_INGOT_AXE = new ToolAxe("copper_ingot_axe", MATERIAL_COPPER);
 	 public static final ItemHoe COPPER_INGOT_HOE = new ToolHoe("copper_ingot_hoe", MATERIAL_COPPER);
-	 public static final ToolBow COPPERBOW = new ToolBow("copperbow");
+	 public static final ToolBow COPPERBOW = new ToolBow("copperbow", MATERIAL_COPPER);
 
 }

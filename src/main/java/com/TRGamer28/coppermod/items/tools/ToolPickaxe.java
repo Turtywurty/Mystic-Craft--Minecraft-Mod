@@ -1,15 +1,16 @@
 package com.TRGamer28.coppermod.items.tools;
+
 import com.TRGamer28.coppermod.init.ModItems;
 import com.TRGamer28.coppermod.util.IHasModel;
 import com.TRGamer28.mysticcraft.Main;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemPickaxe;
 
-public class ToolHoe extends ItemHoe implements IHasModel {
+public class ToolPickaxe extends ItemPickaxe implements IHasModel {
 
- public ToolHoe (String name, ToolMaterial material)
+ public ToolPickaxe (String name, ToolMaterial material)
  {
 	 super(material);
 	 setUnlocalizedName(name);
