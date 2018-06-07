@@ -33,20 +33,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  
 public class ToolBow extends Item implements IHasModel
 {
-	private int maxDmg;
 	private int enchantability;
 	private static float chargeSpeedMod;
 	private static float maxArrowVelocity;
+	private float inaccuracy;
+	private float dmgMod;
 	
 	/** Uses custom bow statistics**/
-	//example usage (standard bow values) maxDurability -> 384, enchantability -> 1, maxArrowVelocity -> 1.0f, chargeSpeedMod -> 1.0f
-	public ToolBow(String name, int maxDurability, int enchantability, float maxArrowVelocity, float chargeSpeedMod) 
+	/**@param maxDurability -> 384, enchantability -> 1, maxArrowVelocity -> 1.0f, chargeSpeedMod -> 1.0f, accuracy -> 1.0f, dmgMod -> 1.0f**/
+	public ToolBow(String name, int maxDurability, int enchantability, float maxArrowVelocity, float chargeSpeedMod, float accuracy, float dmgMod) 
 	{
 		this.maxStackSize = 1;
         this.setMaxDamage(maxDurability);
         this.enchantability = enchantability;
         this.maxArrowVelocity = maxArrowVelocity;
         this.chargeSpeedMod = chargeSpeedMod;
+        this.inaccuracy = (float) 1.0 / accuracy;
+        this.dmgMod = dmgMod;
         construct(name);
     }
 	
@@ -60,6 +63,8 @@ public class ToolBow extends Item implements IHasModel
         this.enchantability = material.getEnchantability();
         this.chargeSpeedMod = (float) 20.0;
         this.maxArrowVelocity = (float) 1.0;
+        this.inaccuracy = (float) 1.0;
+        this.dmgMod = (float) 1 + (float) material.getEfficiency() / 3;
         construct(name);
     }
 	
@@ -85,9 +90,6 @@ public class ToolBow extends Item implements IHasModel
                 }
                 else
                 {
-                	if(entityIn.getActiveItemStack().getItem() != Items.BOW) {
-                		return (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F;
-                	}
                 	if(entityIn.getActiveItemStack().getItem() instanceof ToolBow) {
                 		return (float)(stack.getMaxItemUseDuration() - entityIn.getItemInUseCount()) / 20.0F;
                 	}
@@ -163,7 +165,7 @@ public class ToolBow extends Item implements IHasModel
  
                 float f = getArrowVelocity(i);
  
-                if ((double)f >= 1.1D)
+                if ((double)f >= 0.1D)
                 {
                     boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemArrow && ((ItemArrow) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer));
  
@@ -171,14 +173,15 @@ public class ToolBow extends Item implements IHasModel
                     {
                         ItemArrow itemarrow = (ItemArrow)(itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.ARROW);
                         EntityArrow entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
-                        entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+                        entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, inaccuracy);
  
-                        if (f >= 2.0F)
+                        if (f >= 1.0F)
                         {
                             entityarrow.setIsCritical(true);
                         }
  
                         int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
+                        entityarrow.setDamage(2.0f*dmgMod);
  
                         if (j > 0)
                         {
@@ -194,7 +197,7 @@ public class ToolBow extends Item implements IHasModel
  
                         if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0)
                         {
-                            entityarrow.setFire(300);
+                            entityarrow.setFire(200);
                         }
  
                         stack.damageItem(1, entityplayer);
@@ -230,8 +233,8 @@ public class ToolBow extends Item implements IHasModel
      */
     public static float getArrowVelocity(int charge)
     {
-        float f = (float)charge / (23.0f / chargeSpeedMod);
-        f = (f * f + f * 5.0F) / 6.0F;
+        float f = (float) charge / (20.0f / chargeSpeedMod);
+        f = (f * f + f * 2.0F) / 3.0F;
 
         if (f > maxArrowVelocity)
         {
