@@ -2,13 +2,13 @@
 {
   "modid": "cm",
   "name": "Mystic Craft",
-  "description": "A mod to add  medivel like objects in minecraft.",
+  "description": "A mod to add  medieval objects in minecraft. See demonstration @_",
   "version": "1.5 alpha",
   "mcversion": "1.12.2",
   "url": "",
   "updateUrl": "",
   "authorList": ["TRGamer28"],
-  "credits": "Made by ThatRandomGamer aka TRGamer28, a Youtuber",
+  "credits": "Made by ThatRandomGamer aka TRGamer28 & Sadrien (both have youtubes)",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

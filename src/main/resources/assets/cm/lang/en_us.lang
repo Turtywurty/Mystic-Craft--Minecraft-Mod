@@ -2,6 +2,12 @@
 
 item.copper_ingot.name=Copper Ingot
 item.copper_nugget.name=Copper Nugget
+item.bronze_ingot.name=Bronze Ingot
+item.bronze_nugget.name=Bronze Nugget
+item.silver_ingot.name=Silver Ingot
+item.silver_nugget.name=Silver Nugget
+item.tin_ingot.name=Tin Ingot
+item.tin_nugget.name=Tin Nugget
 
 //Tools
 item.copper_ingot_sword.name=Copper Sword
@@ -15,3 +21,8 @@ item.copperbow.name=Copper Bow
 //Blocks
 tile.copper_block.name=Copper Block
 tile.copper_ore.name=Copper Ore
+tile.silver_block.name=Silver Block
+tile.silver_ore.name=Silver Ore
+tile.tin_block.name=Tin Block
+tile.tin_ore.name=Tin Ore
+tile.bronze_block.name=Bronze Block
