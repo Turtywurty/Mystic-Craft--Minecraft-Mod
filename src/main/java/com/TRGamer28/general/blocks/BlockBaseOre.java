@@ -1,9 +1,7 @@
 package com.TRGamer28.general.blocks;
 
-import java.util.Random; 
+import java.util.Random;
 
-import com.TRGamer28.coppermod.init.CopperModBlocks;
-import com.TRGamer28.coppermod.init.CopperModItems;
 import com.TRGamer28.general.Main;
 import com.TRGamer28.general.init.ModBlocks;
 import com.TRGamer28.general.init.ModItems;

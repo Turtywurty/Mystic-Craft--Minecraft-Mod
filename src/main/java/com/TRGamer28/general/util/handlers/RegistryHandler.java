@@ -1,7 +1,5 @@
 package com.TRGamer28.general.util.handlers;
 
-import com.TRGamer28.coppermod.init.CopperModBlocks;
-import com.TRGamer28.coppermod.init.CopperModItems;
 import com.TRGamer28.general.init.ModBlocks;
 import com.TRGamer28.general.init.ModItems;
 import com.TRGamer28.general.util.IHasModel;
@@ -36,8 +34,6 @@ public class RegistryHandler
 		   if (item instanceof IHasModel)
 		   {
 			   ((IHasModel)item).registerModels();
-			   
-		   
 		   }
 	   }
 	   for (Block block : ModBlocks.BLOCKS) 
@@ -45,12 +41,8 @@ public class RegistryHandler
 		   if (block instanceof IHasModel)
 		   {
 			   ((IHasModel)block).registerModels();
-			   
-		   
 		   }
 	   }
-   }
-   
-   
+   } 
 }
    

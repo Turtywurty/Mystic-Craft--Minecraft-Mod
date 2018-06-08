@@ -1,8 +1,8 @@
 package com.TRGamer28.general;
 
-import com.TRGamer28.coppermod.init.CopperModRecipes;
 import com.TRGamer28.coppermod.proxy.CommonProxy;
-import com.TRGamer28.general.util.Refrence;
+import com.TRGamer28.general.init.ModRecipes;
+import com.TRGamer28.general.util.Reference;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -12,13 +12,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Refrence.MOD_ID, name = Refrence.NAME, version = Refrence.VERSION)
+@Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION)
 public class Main {
 
 	@Instance
 	public static Main instance;
 	
-	@SidedProxy(clientSide = Refrence.CLIENT_PROXY_CLASS,serverSide = Refrence.COMMON_PROXY_CLASS)
+	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS,serverSide = Reference.COMMON_PROXY_CLASS)
 	public static CommonProxy proxy;
 	
 	@EventHandler
@@ -30,7 +30,7 @@ public class Main {
 	@EventHandler
 	public static void init(FMLInitializationEvent event)
 	{
-		CopperModRecipes.init();
+		ModRecipes.init();
 	}
 	
 	@EventHandler

@@ -1,6 +1,6 @@
 package com.TRGamer28.general.objects.entities.vehicle;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.Block; 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,7 +22,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-import com.TRGamer28.coppermod.init.CopperModItems;
 import com.TRGamer28.general.Main;
 
 import java.util.List;
