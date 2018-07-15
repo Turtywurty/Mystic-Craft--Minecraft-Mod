@@ -3,6 +3,7 @@ package com.TRGamer28.coppermod.util.handlers;
 import com.TRGamer28.coppermod.init.ModBlocks;
 import com.TRGamer28.coppermod.init.ModItems;
 import com.TRGamer28.coppermod.util.IHasModel;
+import com.TRGamer28.coppermod.world.gen.WorldGenCustomOres;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -10,6 +11,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @EventBusSubscriber
 public class RegistryHandler 
@@ -46,9 +48,19 @@ public class RegistryHandler
 			   
 		   
 		   }
+	   
 	   }
+   
+	   
+   
    }
    
+   public static void otherRegistries()
+	{
+		GameRegistry.registerWorldGenerator(new WorldGenCustomOres(), 0);
+		
+	}
+
    
 }
    
