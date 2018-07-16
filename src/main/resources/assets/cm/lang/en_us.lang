@@ -31,6 +31,7 @@ item.iron_mace.name=Iron Mace
 items.gold_mace.name=Gold Mace
 item.steel_mace.name=Steel Mace
 item.diamond_mace.name=Diamond Mace
+item.boiled_water.name= Boiled Water
 
 //Blocks
 tile.copper_block.name=Copper Block
@@ -57,4 +58,8 @@ item.bronze_boots.name=Bronze Boots
 //Food and Crops
 item.rice_bowl.name=Rice Bowl
 item.rice.name=Rice
+item.fried_chicken.name=Fried Chicken
+item.boiled_chicken.name=Boiled Chicken
+item.fried_rice.name=Fried Rice
+item.fried_chicken_rice.name=Fried Chicken Rice
 tile.rice_plant.name=Rice Plant
