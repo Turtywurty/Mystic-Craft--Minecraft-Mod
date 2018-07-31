@@ -25,18 +25,19 @@ public class Main {
 	@EventHandler
 	public static void PreInit(FMLPreInitializationEvent event){RegistryHandler.otherRegistries();}
 	{
-		
+		RegistryHandler.preInitRegistries();
 	}
 	
 	@EventHandler
 	public static void init(FMLInitializationEvent event)
 	{
 		ModRecipies.init();
+		RegistryHandler.initRegistries();
 	}
 	
 	@EventHandler
 	public static void PostInit(FMLPostInitializationEvent event)
 	{
-		
+		RegistryHandler.postInitRegistries();
 	}
 }
